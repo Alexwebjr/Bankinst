@@ -1,3 +1,4 @@
+const { Model } = require('sequelize/types');
 const User = require('../models/User');
 
 //METHODS
@@ -14,9 +15,18 @@ exports.getAllUsers = async (req, res, next) => {
   });
 };
 
-exports.getUserById = (req, res, next) => {};
+exports.createUser = async (req, res, next) => {
+  const newUser = await User.create(req.body);
 
-exports.createUser = (req, res, next) => {};
+  res.status(201).json({
+    status: 'success',
+    data: {
+      data: newUser,
+    },
+  });
+};
+
+exports.getUserById = async (req, res, next) => {};
 
 exports.updateUser = (req, res, next) => {};
 
