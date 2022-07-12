@@ -15,3 +15,5 @@ router
   .get(accountController.getAccountById)
   .patch(accountController.updateAccount)
   .delete(accountController.deleteAccount);
+
+module.exports = router;

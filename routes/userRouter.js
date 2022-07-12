@@ -5,15 +5,17 @@ const router = express.Router();
 
 //-------ROUTE--------
 
-router.port('/login', authController.login);
+router.post('/login', authController.login);
 
 router
   .route('/')
-  .get(userController.getAllUsers)
+  .get(authController.protect, userController.getAllUsers)
   .post(userController.createUser);
 
 router
   .route('/:id')
-  .get(userController.getUserById)
-  .patch(userController.updateUser)
-  .delete(userController.deleteUser);
+  .get(authController.protect, userController.getUserById)
+  .patch(authController.protect, userController.updateUser)
+  .delete(authController.protect, userController.deleteUser);
+
+module.exports = router;

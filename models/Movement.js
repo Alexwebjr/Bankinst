@@ -16,6 +16,10 @@ const Movement = sequelize.define('movement', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
+  status: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
 });
 
 module.exports = Movement;

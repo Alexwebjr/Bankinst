@@ -15,3 +15,5 @@ router
   .get(movementController.getMovementById)
   .patch(movementController.updateMovement)
   .delete(movementController.deleteMovement);
+
+module.exports = router;

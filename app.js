@@ -11,6 +11,7 @@ const Movement = require('./models/Movement');
 const userRouter = require('./routes/userRouter');
 const accountRouter = require('./routes/accountRouter');
 const movementRouter = require('./routes/movementRouter');
+const globalErrorHandler = require('./controllers/errorController');
 const app = express();
 
 //::::::====== STATIC ======::::::
@@ -35,9 +36,26 @@ app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
+//Error Handler
+app.use(globalErrorHandler);
 //::::::====== DB ======::::::
+//Relations
+User.hasMany(Account);
+Account.belongsTo(User, {
+  foreignKey: {
+    allowNull: false,
+  },
+});
+//----
+Account.hasMany(Movement);
+Movement.belongsTo(Account, {
+  foreignKey: {
+    allowNull: false,
+  },
+});
+//Sync
 sequelize
-  .sync({ force: true })
+  .sync()
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log(`App runing in http://localhost:${process.env.PORT}`);
