@@ -3,6 +3,7 @@ const express = require('express');
 require('dotenv').config();
 
 const sequelize = require('./util/database');
+const ejs = require('ejs');
 const cookieParser = require('cookie-parser');
 
 const User = require('./models/User');
@@ -17,6 +18,10 @@ const app = express();
 //::::::====== STATIC ======::::::
 app.use(express.static(path.join(__dirname, 'public'))); //static HTML
 
+//::::::====== VIEWS ======::::::
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 //::::::====== PARSER ======::::::
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
@@ -28,7 +33,7 @@ app.use('/api/v1/accounts', accountRouter);
 app.use('/api/v1/movements', movementRouter);
 
 app.get('/', async (req, res) => {
-  res.sendFile('index.html');
+  res.render('login');
 });
 
 //Error Route
@@ -38,6 +43,7 @@ app.all('*', (req, res, next) => {
 
 //Error Handler
 app.use(globalErrorHandler);
+
 //::::::====== DB ======::::::
 //Relations
 User.hasMany(Account);
