@@ -1,9 +1,13 @@
 const Movement = require('../models/Movement');
+const factory = require('./factory');
 
 //METHODS
+exports.createMovement = factory.createOne(Movement);
 
-exports.getAllMovements = (req, res, next) => {};
-exports.getMovementById = (req, res, next) => {};
-exports.createMovement = (req, res, next) => {};
-exports.updateMovement = (req, res, next) => {};
-exports.deleteMovement = (req, res, next) => {};
+exports.getAllMovements = factory.getAll(Movement);
+
+exports.getMovementById = factory.getOne(Movement);
+
+exports.updateMovement = factory.updateOne(Movement);
+
+exports.deleteMovement = factory.deleteOne(Movement);

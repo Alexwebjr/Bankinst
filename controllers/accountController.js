@@ -1,9 +1,13 @@
 const Account = require('../models/Account');
+const factory = require('./factory');
 
 //METHODS
+exports.createAccount = factory.createOne(Account);
 
-exports.getAllAccounts = (req, res, next) => {};
-exports.getAccountById = (req, res, next) => {};
-exports.createAccount = (req, res, next) => {};
-exports.updateAccount = (req, res, next) => {};
-exports.deleteAccount = (req, res, next) => {};
+exports.getAllAccounts = factory.getAll(Account);
+
+exports.getAccountById = factory.getOne(Account);
+
+exports.updateAccount = factory.updateOne(Account);
+
+exports.deleteAccount = factory.deleteOne(Account);

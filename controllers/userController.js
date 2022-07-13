@@ -1,49 +1,23 @@
 const User = require('../models/User');
+const Account = require('../models/Account');
 const catchAsync = require('../util/catchAsync');
 const AppError = require('../util/appError');
+const factory = require('./factory');
 
 //METHODS
+exports.createUser = factory.createOne(User);
 
-exports.getAllUsers = async (req, res, next) => {
-  const users = await User.findAll();
+exports.getAllUsers = factory.getAll(User);
 
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    data: {
-      data: users,
-    },
-  });
-};
+exports.getUserById = factory.getOne(User);
 
-exports.createUser = catchAsync(async (req, res, next) => {
-  const newUser = await User.create(req.body);
+exports.updateUser = factory.updateOne(User);
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      data: newUser,
-    },
-  });
-});
+exports.deleteUser = factory.deleteOne(User);
 
-exports.getUserById = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-
-  const user = await User.findOne({ where: { id } });
-
-  user.password = undefined;
-
-  res.status(201).json({
-    status: 'success',
-    data: {
-      data: user,
-    },
-  });
-});
-
-exports.updateUser = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
+//OTHERS
+exports.getUserAccounts = catchAsync(async (req, res, next) => {
+  let { id } = req.params;
 
   const user = await User.findOne({ where: { id } });
 
@@ -51,20 +25,19 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     return next(new AppError('Please provide a valid id', 400));
   }
 
-  user.set(req.body);
-
-  const newUser = await user.save();
+  const accounts = await user.getAccounts();
 
   res.status(200).json({
     status: 'success',
+    results: accounts.length,
     data: {
-      data: newUser,
+      data: accounts,
     },
   });
 });
 
-exports.deleteUser = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
+exports.getUserAccountById = catchAsync(async (req, res, next) => {
+  let { id, accountId } = req.params;
 
   const user = await User.findOne({ where: { id } });
 
@@ -72,9 +45,16 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
     return next(new AppError('Please provide a valid id', 400));
   }
 
-  await user.destroy();
+  const account = await user.getAccounts({ where: { id: accountId } });
 
-  res.status(204).json({
+  if (!account) {
+    return next(new AppError('There is not an Account with this id', 400));
+  }
+
+  res.status(200).json({
     status: 'success',
+    data: {
+      data: account,
+    },
   });
 });

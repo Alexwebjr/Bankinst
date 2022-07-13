@@ -18,4 +18,15 @@ router
   .patch(authController.protect, userController.updateUser)
   .delete(authController.protect, userController.deleteUser);
 
+//Accounts
+router
+  .route('/:id/accounts/')
+  .get(authController.protect, userController.getUserAccounts);
+
+router
+  .route('/:id/accounts/:accountId')
+  .get(authController.protect, userController.getUserAccountById);
+//   .patch(authController.protect, userController.updateUser)
+//   .delete(authController.protect, userController.deleteUser);
+
 module.exports = router;
