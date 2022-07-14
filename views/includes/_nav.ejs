@@ -1,5 +1,6 @@
 <!-- TOP NAVIGATION -->
 <nav>
+  <% if(!user){ %>
   <p class="welcome">Log in to get started</p>
   <img src="logo.png" alt="Logo" class="logo" />
   <form class="login">
@@ -17,4 +18,11 @@
     />
     <button class="login__btn">&rarr;</button>
   </form>
+  <% } else { %>
+  <p class="welcome">Hi <%= user.fullName; %></p>
+  <img src="logo.png" alt="Logo" class="logo" />
+  <form class="login">
+    <button class="login__btn">Logout &rarr;</button>
+  </form>
+  <% } %>
 </nav>

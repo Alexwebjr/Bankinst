@@ -12,7 +12,9 @@ const Movement = require('./models/Movement');
 const userRouter = require('./routes/userRouter');
 const accountRouter = require('./routes/accountRouter');
 const movementRouter = require('./routes/movementRouter');
+const viewRouter = require('./routes/viewRouter');
 const globalErrorHandler = require('./controllers/errorController');
+
 const app = express();
 
 //::::::====== STATIC ======::::::
@@ -31,10 +33,11 @@ app.use(cookieParser());
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/accounts', accountRouter);
 app.use('/api/v1/movements', movementRouter);
+app.use('/', viewRouter);
 
-app.get('/', async (req, res) => {
-  res.render('login');
-});
+// app.get('/', async (req, res) => {
+//   res.render('login');
+// });
 
 //Error Route
 app.all('*', (req, res, next) => {
