@@ -4,12 +4,15 @@
   <body>
     <%- include('includes/_nav', {user: user}); %>
     <main class="app">
-      <% const movIn = movements.filter(x=> x.type === 'deposit').map(x =>
-      parseFloat(x.amount).toFixed(2)).reduce((suma, val) => suma+= val); const
-      movOut = movements.filter(x=> x.type !== 'deposit').map(x =>
-      parseFloat(x.amount).toFixed(2)).reduce((suma, val) => suma+= val); %>
+      <% const movInArr = movements.filter(x=> x.type === 'deposit'); const
+      movOutArr = movements.filter(x=> x.type !== 'deposit'); const movIn =
+      (movInArr.length > 0)? movInArr.map(x => Number(x.amount)).reduce((suma,
+      val) => suma+= val) : 0; const movOut =(movOutArr.length > 0)?
+      movOutArr.map(x => Number(x.amount)).reduce((suma, val) => suma+= val) :
+      0; %>
       <!-- BALANCE -->
       <div class="balance">
+        <input type="hidden" value="<%= account.id%>" id="accountId" />
         <div>
           <p class="balance__label">
             Cuenta: <strong><%= account.name; %></strong>
@@ -65,7 +68,7 @@
       <div class="operation operation--transfer">
         <h2>Transfer money</h2>
         <form class="form form--transfer">
-          <input type="text" class="form__input form__input--to" />
+          <input type="number" class="form__input form__input--to" />
           <input type="number" class="form__input form__input--amount" />
           <button class="form__btn form__btn--transfer">&rarr;</button>
           <label class="form__label">Transfer to</label>
@@ -84,7 +87,7 @@
         </form>
       </div>
 
-      <!-- OPERATION: CLOSE -->
+      <!-- OPERATION: CLOSE 
       <div class="operation operation--close">
         <h2>Close account</h2>
         <form class="form form--close">
@@ -99,6 +102,7 @@
           <label class="form__label">Confirm PIN</label>
         </form>
       </div>
+      -->
 
       <!-- LOGOUT TIMER -->
       <p class="logout-timer">

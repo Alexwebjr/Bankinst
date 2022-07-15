@@ -35,10 +35,6 @@ app.use('/api/v1/accounts', accountRouter);
 app.use('/api/v1/movements', movementRouter);
 app.use('/', viewRouter);
 
-// app.get('/', async (req, res) => {
-//   res.render('login');
-// });
-
 //Error Route
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

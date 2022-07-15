@@ -8,12 +8,12 @@ const router = express.Router();
 router
   .route('/')
   .get(accountController.getAllAccounts)
-  .post(accountController.createAccount);
+  .post(authController.protect, accountController.createAccount);
 
 router
   .route('/:id')
-  .get(accountController.getAccountById)
-  .patch(accountController.updateAccount)
-  .delete(accountController.deleteAccount);
+  .get(authController.protect, accountController.getAccountById)
+  .patch(authController.protect, accountController.updateAccount)
+  .delete(authController.protect, accountController.deleteAccount);
 
 module.exports = router;

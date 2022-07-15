@@ -5,7 +5,13 @@ const router = express.Router();
 
 //-------ROUTE--------
 
-router.route('/overview').get(viewController.getOverview);
+router.route('/').get(viewController.getIndex);
+
+router.route('/login').get(viewController.getLoginForm);
+
+router
+  .route('/overview')
+  .get(authController.protect, viewController.getOverview);
 
 // router
 //   .route('/:id')

@@ -3,7 +3,7 @@
   <% if(!user){ %>
   <p class="welcome">Log in to get started</p>
   <img src="logo.png" alt="Logo" class="logo" />
-  <form class="login">
+  <form class="login login__form">
     <input
       type="text"
       placeholder="user"
@@ -11,18 +11,18 @@
     />
     <!-- In practice, use type="password" -->
     <input
-      type="text"
+      type="password"
       placeholder="PIN"
       maxlength="4"
       class="login__input login__input--pin"
     />
-    <button class="login__btn">&rarr;</button>
+    <button id="logIn_btn" class="login__btn">&rarr;</button>
   </form>
   <% } else { %>
   <p class="welcome">Hi <%= user.fullName; %></p>
   <img src="logo.png" alt="Logo" class="logo" />
   <form class="login">
-    <button class="login__btn">Logout &rarr;</button>
+    <button id="logOut_btn" class="login__btn">Logout &rarr;</button>
   </form>
   <% } %>
 </nav>

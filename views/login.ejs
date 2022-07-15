@@ -2,11 +2,11 @@
 <html lang="en">
   <%- include('includes/_head'); %>
   <body>
-    <%- include('includes/_nav'); %>
+    <%- include('includes/_nav', {user: null}); %>
 
-    <main class="app">
-      <h2>Login</h2>
-    </main>
+    <div class="frontmsn">
+      <img src="./img/login.png" />
+    </div>
 
     <%- include('includes/_footer'); %>
   </body>

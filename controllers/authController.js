@@ -24,7 +24,7 @@ const createSendToken = (user, statusCode, res) => {
 
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
-  res.cookie('jwt', token, cookieOptions);
+  res.cookie('jwt_Bankinst', token, cookieOptions);
 
   user.password = undefined;
 
@@ -63,8 +63,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
-  } else if (req.cookies.jwt) {
-    token = req.cookies.jwt;
+  } else if (req.cookies.jwt_Bankinst) {
+    token = req.cookies.jwt_Bankinst;
   }
 
   if (!token) {
@@ -96,7 +96,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 });
 
 exports.logout = catchAsync(async (req, res, next) => {
-  res.cookie('jwt', 'loggedout', {
+  res.cookie('jwt_Bankinst', 'loggedout', {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
